@@ -11,6 +11,8 @@
 
 #define kMaxKeySize 1024
 
+//во-первых, перечисляемый тип - совет Чернова, чтобы было понятно, что за константы используются в менюшке. 
+//я вот думаю, что-нибудь изменится, если мы их уберем?
 enum
 {
 	XOR = 1,
@@ -71,6 +73,7 @@ void search(int number)
 		cur = cur->next;
 	}
 }
+
 unsigned int keystat[kMaxKeySize][256];
 unsigned char password[50];
 unsigned char* shifr_text, *lolo;
@@ -82,6 +85,8 @@ void xor_cypher()
 {
 	setlocale(0, "");
 	FILE* fin = fopen("input.txt", "rb"), *fout = fopen("output.txt", "wb");
+
+
 	long long i = 0;
 
 	if (fin == NULL)
@@ -97,6 +102,7 @@ void xor_cypher()
 	long long length = strlen(password);
 
 	int c = fgetc(fin);//Оптимизация на уровне алгоритма можно один раз обратиться к памяти, считав всё сразу в строку
+	//ну не знаю, Вагиз, не знаю. 
 	while (c != EOF)
 	{
 		c ^= password[i % length];
@@ -147,6 +153,7 @@ float sum_matches(unsigned char split_str[], int size)
 	return sum;
 }
 
+//АЛГОРИТМ. Можем переписать кусорт на более говеную сортировку, а потом написать, что мы сделали кусорт. 
 void qsortt(int l, int r, unsigned char a[])
 {
 	if (l < r)
@@ -219,6 +226,7 @@ int key_size(unsigned char shifr_text[], int size, float key_long[])
 unsigned char frequency[] = " etaoinshrdlcumwfgypbvkxjqz";
 unsigned char alphabet[] = " etaoinshrdlcumwfgypbvkxjqzETAOINSHRDLCUMWFGYPBVKXJQZ1234567890!_№;%:?*()-=+&^$#@";
 
+//МАШИННО-НЕЗАВИС. Расставить иф по вероятности. 
 int is_it_char(char c)
 {
 	if ((c >= '0' && c <= '?') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= 32 && c <= 47))
@@ -228,7 +236,7 @@ int is_it_char(char c)
 	else return 0;
 }
 
-
+//АЛГОРИТМ. Можно организовать бинарный поиск вместо линейного, но там всего-навсего максимум 8 раз цикл идет, хз, улучшит ли это ситуацию. 
 int check(char c, const char* neig)
 {
 	if (c != ' ')
@@ -254,6 +262,7 @@ int check(char c, const char* neig)
 	else return 0;
 }
 
+//Алгоритм. или машин-нез? Если бы мы вместо case использовали if-elseif, а потом тип переделали на case.
 int analysis_bin(unsigned char* tempkey, int sizetext)
 {
 	//memset(tmp_shifr_text, 0, sizetext);
@@ -374,8 +383,6 @@ int analysis_bin(unsigned char* tempkey, int sizetext)
 		default:
 			break;
 		}
-
-
 	}
 	return tmp_count_bin;
 }
@@ -401,6 +408,11 @@ void show_result(unsigned char *tmp_key, int want, int sizetext, int currentMax)
 	printf("%d. Коэффициент \"хороших соседей\" = %d \n", countRecords, currentMax);
 	printf("Предполагаемый ключ: ");
 	for (int j = 0; j < kSize; j++)//можно вывести строку я правда хз к какому это относиться 
+		//тся. 
+		/*как ты выведешь строку? ты уверен, что у нас в temp_key дальше kSize позиции одни нули, а не мусор? 
+		По-моему, там как раз был мусор, поэтому пришлось делать такой цикл.
+		хотя идея хорошая.
+		по-моему, это можно и в алгоритм запихать, но семьянов будет несогласен. я спрошу у него как-нибудь*/
 	{
 		printf("%c", tmp_key[j]);
 	}
@@ -416,22 +428,22 @@ void show_result(unsigned char *tmp_key, int want, int sizetext, int currentMax)
 
 }
 
-int gl_count = 0;
 void BruteForce(unsigned char* key, unsigned char* hu, int size, int number, int sizetext)
 {
 	if (size == 0)
 	{
-		//gl_count++;
-		//printf("%d\n", gl_count);
+		/*вот этот иф вообще не относится к алгоритму, я написала его, потому что надо было проверить,
+		находится ли вообще ключ, который записан в кк. я пока закоменчу его, чтобы функция не делала лишних проверок, 
+		но не удаляй этот иф пж.*/
+		/*
 		if (strcmp(hu, kk) == 0)
 		{
 			printf("YES");
 		}
-
+		*/
 		int currentMax = analysis_bin(hu, sizetext);
 		if (currentMax > Max)
 		{
-			
 			deletelem();
 			system("cls");
 			countRecords = 0;
@@ -439,12 +451,11 @@ void BruteForce(unsigned char* key, unsigned char* hu, int size, int number, int
 
 			Max = currentMax;
 		}
+		//поч мы выбрали такое маленькое число как 2?
 		else if (Max - currentMax <= 2)
 		{
 			show_result(hu, 100, sizetext, currentMax);
 		}
-
-
 		return;
 	}
 	else
@@ -465,14 +476,16 @@ void BruteForce(unsigned char* key, unsigned char* hu, int size, int number, int
 void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigned int ksize)
 {
 	//int t = clock();
+	//МАШИННО-ЗАВ. всякие функции работы с памятью тип memset, мне кажется, туда относятся. 
 	memset(keystat, 0, sizeof(keystat));
 	unsigned int read = ksize;
 
 	for (unsigned int start = 0; start < size;)
 	{
+		//вынести size-start в отдельную переменную. 
 		if (read > (size - start))
 			read = (size - start);
-
+		//разверстка цикла?
 		for (unsigned int i = 0; i < read; i++)
 		{
 			keystat[i][text[start + i]]++;
@@ -515,7 +528,6 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 void print(unsigned char* key, int length)
 {
 	FILE* fin = fopen("output.txt", "rb"), *fout = fopen("finish.txt", "wb");
-	//зачем у нас здесь переменная i? Кажется, ее можно удалить. 
 	long long i = 0;
 	if (fin == NULL)
 	{
@@ -527,6 +539,8 @@ void print(unsigned char* key, int length)
 	int c = fgetc(fin);
 	while (c != EOF)
 	{
+		/*МАШ-ЗАВ. крч, надо каждый раз цифклически повторять элементы массива. их индексы от 0 до lengt - 1. типа 0 1 2 3 0 1 2 3 0 1 2 3
+		но тогда появится проверка if (индекс < lenght) и она будет на каждой итерации. хз, лучше ли это*/
 		c ^= key[i % length];
 		i++;
 		fputc(c, fout);
@@ -545,6 +559,7 @@ int correct(char *key, int sizeText)
 	while (menu < 0)
 	{
 		scanf("%d", &menu);
+		//этот иф проверка на корректность? 
 		if (menu < 0)
 		{
 			char c = '\0';
@@ -577,6 +592,7 @@ int correct(char *key, int sizeText)
 		printf("Символ не найден\n");
 		return 1;
 	}
+	//машинно-завис. есть ли способ найти остаток от деления проще? он там что-то затирал, но по-моему там был аж цикл.
 	int number = count % kSize;
 	char sim = key[number];
 	for (char i = 0; i < 127; i++)//mozno razvernyt
@@ -588,7 +604,6 @@ int correct(char *key, int sizeText)
 			int check = analysis_bin(key, sizeText);
 			if (Max - check < 5)
 			{
-
 				printf("Коэффициент \"хороших соседей\" = %d \n", check);
 				printf("Предполагаемый ключ: ");
 				for (int j = 0; j < kSize; j++)
@@ -615,6 +630,7 @@ int correct(char *key, int sizeText)
 			}
 		}
 	}
+	//строчка ниже лишняя. у тебя с начала char sim = key[number];, и если ничего не найдено, ты делаешь обратное присваивание. зачем?
 	key[number] = sim;
 	printf("Невозможно заменить\n");
 	return 1;
@@ -626,7 +642,9 @@ int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+
 	init();
+
 	FILE* fin = fopen("output.txt", "rb");
 
 	if (fin == NULL)
@@ -685,6 +703,7 @@ int main()
 				{
 					if (kSize < 10)
 						count_for_Brut = 7;
+					//как насчет в else-if связать?
 					else
 					{
 						if (kSize == 10)
