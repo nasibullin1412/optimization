@@ -96,7 +96,7 @@ void xor_cypher()
 
 	long long length = strlen(password);
 
-	int c = fgetc(fin);
+	int c = fgetc(fin);//Оптимизация на уровне алгоритма можно один раз обратиться к памяти, считав всё сразу в строку
 	while (c != EOF)
 	{
 		c ^= password[i % length];
@@ -131,7 +131,8 @@ float sum_matches(unsigned char split_str[], int size)
 {
 	int i = 0, count_repit = 0;
 	float sum = 0.0;
-	for (i = 0; i < size - 1; i++)
+	//int sizeFor = size - 1;// вынос инварианта
+	for (i = 0; i < size-1; i++)
 	{
 		if (split_str[i] == split_str[i + 1])
 		{
@@ -139,7 +140,7 @@ float sum_matches(unsigned char split_str[], int size)
 		}
 		else
 		{
-			sum += count_repit * (count_repit - 1) / (float)(size * (size - 1));
+			sum += count_repit * (count_repit - 1) / (float)(size * (size - 1));//вынос инваринта
 			count_repit = 0;
 		}
 	}
@@ -177,7 +178,7 @@ float split_text(int size_key, unsigned char shifr_text[], int size)
 	unsigned char* split_str = (unsigned char*)malloc(a * sizeof(unsigned char));
 	int count = 0;
 	float sum = 0.0;
-	for (int start = 0; start < size_key; start++)
+	for (int start = 0; start < size_key; start++)//развернуть
 	{
 		for (int i = start; i < size; i += size_key, count++)
 		{
@@ -399,14 +400,14 @@ void show_result(unsigned char *tmp_key, int want, int sizetext, int currentMax)
 	countRecords++;
 	printf("%d. Коэффициент \"хороших соседей\" = %d \n", countRecords, currentMax);
 	printf("Предполагаемый ключ: ");
-	for (int j = 0; j < kSize; j++)
+	for (int j = 0; j < kSize; j++)//можно вывести строку я правда хз к какому это относиться 
 	{
 		printf("%c", tmp_key[j]);
 	}
 	printf("\n");
 	printf("Текст: \n");
 	cur = addElem(tmp_key, kSize);
-	for (int j = 0; j < needsize; j++)
+	for (int j = 0; j < needsize; j++)//тоже самое
 	{
 		printf("%c", tmp_shifr_text[j]);
 	}
