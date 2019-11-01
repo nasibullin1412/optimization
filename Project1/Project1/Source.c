@@ -38,7 +38,7 @@ KEY * addElem(char *key_, int size)
 {
 	KEY *p = (KEY*)malloc(sizeof(KEY));
 	cur->next = p;
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size; i++)//заменить на присваивание указателя??
 	{
 		p->key[i] = key_[i];
 	}
@@ -257,11 +257,11 @@ int analysis_bin(unsigned char* tempkey, int sizetext)
 {
 	//memset(tmp_shifr_text, 0, sizetext);
 	int needsize = need_size(100, sizetext), tmp_count_bin = 0;
-	for (int j = 0; j < needsize; j++)
+	for (int j = 0; j < needsize; j++)//развернуть
 	{
 		tmp_shifr_text[j] = shifr_text[j] ^ tempkey[j % kSize];
 	}
-	for (int j = 1; j < needsize - 1; j++)
+	for (int j = 1; j < needsize - 1; j++)//развернуть
 	{
 		unsigned char tmp = tolower(tmp_shifr_text[j]);
 		switch (tmp)
@@ -379,102 +379,6 @@ int analysis_bin(unsigned char* tempkey, int sizetext)
 	return tmp_count_bin;
 }
 
-int analysis(unsigned char* tempkey, int sizetext)
-{
-	int needsize;
-	if (sizetext < 100)
-	{
-		needsize = sizetext;
-	}
-	else needsize = 100;
-	for (int j = 0; j < needsize; j++)
-	{
-		tmp_shifr_text[j] = shifr_text[j] ^ tempkey[j % kSize];
-		//printf("%c", tmp_shifr_text[j]);
-	}
-	//printf("\n\n");
-	for (int j = 1; j < needsize - 1; j++)
-	{
-		if ((tmp_shifr_text[j] >= '0' && tmp_shifr_text[j] <= '9') || tmp_shifr_text[j] == '%' || tmp_shifr_text[j] == '+' || tmp_shifr_text[j] == '-')
-		{
-			if (isalpha(tmp_shifr_text[j + 1]) && isalpha(tmp_shifr_text[j - 1]))
-			{
-				return 0;
-			}
-		}
-		else if (tmp_shifr_text[j] == '>' || tmp_shifr_text[j] == '<')
-		{
-			if (isalpha(tmp_shifr_text[j - 1]) || isalpha(tmp_shifr_text[j + 1]))
-			{
-				return 0;
-			}
-		}
-		else if (tmp_shifr_text[j] == '!' || tmp_shifr_text[j] == ',' || tmp_shifr_text[j] == '.' || tmp_shifr_text[j] == '?')
-		{
-			if (!isalpha(tmp_shifr_text[j - 1]) && !(tmp_shifr_text[j - 1] >= '0' && tmp_shifr_text[j - 1] <= '9'))
-			{
-				return 0;
-			}
-			if (tmp_shifr_text[j + 1] != ' ' && tmp_shifr_text[j + 1] != '\n')
-			{
-				return 0;
-			}
-
-		}
-		else if (tmp_shifr_text[j] == '&')
-		{
-			if (!(tmp_shifr_text[j + 1] >= 'A' && tmp_shifr_text[j + 1] <= 'Z'))
-			{
-				return 0;
-			}
-			if (!isalpha(tmp_shifr_text[j - 1]))
-			{
-				return 0;
-			}
-		}
-		else if (tmp_shifr_text[j] == ')')
-		{
-			if (isalpha(tmp_shifr_text[j + 1]))
-			{
-				return 0;
-			}
-		}
-		else if (tmp_shifr_text[j] == '(' || tmp_shifr_text[j] == '#')
-		{
-			if (tmp_shifr_text[j - 1] != ' ')
-			{
-				return 0;
-			}
-		}
-		else if (tmp_shifr_text[j] == '$')
-		{
-			if (tmp_shifr_text[j - 1] != ' ')
-			{
-				return 0;
-			}
-			if (!(tmp_shifr_text[j + 1] >= '0' && tmp_shifr_text[j + 1] <= '9'))
-			{
-				return 0;
-			}
-
-		}
-		else if (tmp_shifr_text[j] == '"' || tmp_shifr_text[j] == '\'')
-		{
-			if (tmp_shifr_text[j - 1] != ' ' && tmp_shifr_text[j + 1] != ' ')
-			{
-				return 0;
-			}
-		}
-		else if (isalpha(tmp_shifr_text[j]) && (tmp_shifr_text[j] == tmp_shifr_text[j - 1]) && (tmp_shifr_text[j] == tmp_shifr_text[j + 1]))
-		{
-			return 0;
-		}
-
-	}
-	printf("\n\n");
-	return 1;
-
-}
 
 int Max = 0;
 char* kk = "helloworld";
@@ -525,22 +429,7 @@ void BruteForce(unsigned char* key, unsigned char* hu, int size, int number, int
 		int currentMax = analysis_bin(hu, sizetext);
 		if (currentMax > Max)
 		{
-			/*int needsize = need_size(100, sizetext);
-
-			printf("Коэффициент \"хороших соседей\" = %d \n", currentMax);
-			printf("Предполагаемый ключ: ");
-			for (int j = 0; j < kSize; j++)
-			{
-				printf("%c", hu[j]);
-			}
-
-			printf("\n");
-			printf("Текст: \n");
-			for (int j = 0; j < needsize; j++)
-			{
-				printf("%c", tmp_shifr_text[j]);
-			}
-			printf("\n");*/
+			
 			deletelem();
 			system("cls");
 			countRecords = 0;
@@ -553,21 +442,6 @@ void BruteForce(unsigned char* key, unsigned char* hu, int size, int number, int
 			show_result(hu, 100, sizetext, currentMax);
 		}
 
-		/*
-		if (analysis(hu, sizetext))
-		{
-			for (int j = 0; j < kSize; j++)
-			{
-				printf("%c", hu[j]);
-			}
-			printf("----KEY!!");
-			printf("\n");
-			for (int j = 0; j < 100; j++)
-			{
-				printf("%c", tmp_shifr_text[j]);
-			}
-
-		}*/
 
 		return;
 	}
@@ -614,7 +488,7 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 			unsigned int v = 0;
 			unsigned int max = 0;
 
-			for (int j = 0; j < 256; j++)
+			for (int j = 0; j < 256; j++)//razveeeeeertka
 			{
 				if (keystat[i][j] > max)
 				{
