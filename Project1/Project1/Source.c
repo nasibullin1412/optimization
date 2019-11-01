@@ -383,6 +383,7 @@ int analysis_bin(unsigned char* tempkey, int sizetext)
 int Max = 0;
 char* kk = "helloworld";
 int countRecords = 0;
+
 int need_size(int want, int sizetext)
 {
 	if (sizetext < want)
@@ -513,6 +514,7 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 void print(unsigned char* key, int length)
 {
 	FILE* fin = fopen("output.txt", "rb"), *fout = fopen("finish.txt", "wb");
+	//зачем у нас здесь переменная i? Кажется, ее можно удалить. 
 	long long i = 0;
 	if (fin == NULL)
 	{
