@@ -10,6 +10,67 @@
 #include <time.h>
 
 #define kMaxKeySize 1024
+int tableLeft[29][29] = { -1, -1, 2, 2, 1, -1, -1, 1, -1, -1, -1, 2, 2, 2, -1, -1, -1, 1, 1, 1, -1, -1, 1, -1, -1, -1, -1, -1, -1,
+	1, 2, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 1, -1, -1, -1, 1, 2, 2, -1, -1, -1, 2, -1, -1, -1, -1,
+	1, -1, -1, -1, 1, -1, -1, -1, 1, -1, -1, 1, -1, 2, 2, -1, -1, -1, 2, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, -1, 1, -1, -1, -1, 2, -1, -1, 2, -1, 1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, 2, 2, 2, 2, -1, -1, 1, -1, -1, -1, 1, 2, 1, -1, -1, -1, 1, 1, 1, -1, 2, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, 2, 1, 2, -1, -1, 1, -1, -1, -1, -1, 2, 1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, 2, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 2, -1, -1, 2, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, 1, -1, 2, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, -1, -1, 2, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, 1, 2, 2, -1, 1, -1, -1, -1, 1, 2, 2, -1, -1, -1, 1, 1, 1, -1, -1, 2, -1, -1, -1, -1, -1, -1,
+	1, 1, 1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, 2, 2, -1, -1, 2, -1, 2, -1, -1, -1, -1,
+	1, -1, 1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, 2, 1, -1, -1, 1, -1, -1, 2, -1, -1, -1, 2, -1, -1, -1, -1,
+	1, 2, -1, -1, 1, -1, -1, -1, 2, -1, -1, 1, 2, -1, 1, 2, -1, -1, -1, 2, 1, -1, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, 2, 1, -1, -1, -1, 1, -1, -1, -1, 2, -1, 1, -1, -1, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, -1, 2, -1, -1, -1, 1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, 1, 2, 1, 1, -1, 2, 1, -1, -1, 2, -1, 2, 2, 2, -1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, -1, 1, -1, -1, -1, 2, -1, -1, 2, 1, 2, 1, 2, -1, 2, 1, 2, 1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, 1, 1, -1, -1, -1, -1, -1, -1, 2, -1, 2, 2, -1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, -1, 1, -1, -1, -1, 2, -1, -1, -1, -1, -1, 1, 2, -1, -1, -1, 1, 2, -1, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, 2, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 2, -1, -1, 2, 1, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, 2, 1, 2, -1, -1, 1, -1, -1, -1, -1, 1, 2, -1, -1, -1, 1, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, 1, -1, 1, -1, 2, -1, -1, -1, -1, -1, 2, -1, -1, 1, 2, -1, -1, 1, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, -1, 2, -1, -1, 2, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, 2, 1, -1, 2, -1, -1, -1, -1, -1, -1, 2, 1, -1, -1, -1, 1, 1, -1, -1, -1, -1, 2, -1, -1, -1, -1,
+	-1, -1, -1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1,
+	2, 2, -1, -1, 1, -1, -1, -1, -1, -1, -1, 1, -1, 2, -1, -1, -1, 1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+
+
+
+int tableRight[29][29] = { -1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 2, -1, -1, -1, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+1, 1, -1, -1, 2, -1, -1, -1, -1, -1, -1, 2, -1, -1, 2, -1, -1, 1, -1, -1, 2, -1, -1, -1, 1, -1, -1, -1, -1,
+2, -1, -1, -1, 2, -1, -1, 2, 1, -1, 1, 1, -1, -1, 2, -1, -1, 1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+1, -1, -1, -1, 2, -1, -1, -1, 2, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 2, 1, -1, -1, -1, -1, -1, -1, -1, -1,
+2, -1, 1, 2, 1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 1, -1, -1, 2, 2, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+1, -1, -1, -1, 2, 1, -1, -1, 2, -1, -1, -1, -1, -1, 2, -1, -1, 1, -1, 2, 1, -1, -1, -1, -1, -1, -1, -1, -1,
+2, -1, -1, -1, 2, 1, -1, 2, 1, -1, -1, -1, -1, -1, 2, -1, -1, 2, 1, 1, -1, -1, 1, -1, -1, -1, -1, -1, -1,
+2, -1, -1, -1, 2, -1, -1, -1, 1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+1, -1, 2, -1, 1, -1, -1, -1, -1, -1, -1, 1, 1, 2, 2, -1, -1, 1, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+2, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, 1, -1, 2, -1, -1, -1, -1, -1, 2, -1, 1, -1, -1, -1, -1, -1, -1,
+1, -1, -1, -1, 2, -1, -1, -1, 2, -1, -1, -1, -1, 2, -1, -1, -1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+1, -1, -1, 1, 2, -1, -1, -1, 2, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, 1, -1, -1, -1, 2, -1, -1, -1, -1,
+2, -1, -1, -1, 2, -1, -1, -1, 1, -1, -1, -1, 1, -1, 2, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+1, -1, 1, 2, 2, -1, 2, -1, 1, -1, -1, -1, -1, 2, 1, -1, -1, -1, 1, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+-1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, 1, 1, 2, 1, -1, -1, 2, 1, 2, 2, -1, 1, -1, -1, -1, -1, -1, -1,
+2, -1, -1, -1, 2, -1, -1, -1, 1, -1, -1, 2, -1, -1, 2, 1, -1, 2, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1,
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1,
+2, -1, -1, -1, 2, -1, -1, -1, 1, -1, -1, -1, -1, -1, 2, -1, -1, -1, 1, 1, -1, -1, -1, -1, 1, -1, -1, -1, -1,
+1, -1, -1, -1, 2, -1, -1, 1, 2, -1, -1, -1, -1, -1, 2, 1, -1, -1, 1, 2, 1, -1, -1, -1, -1, -1, -1, -1, -1,
+1, -1, -1, -1, 1, -1, -1, 2, 2, -1, -1, -1, -1, -1, 2, -1, -1, 1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+-1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, 2, -1, 1, -1, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+1, -1, -1, -1, 2, -1, -1, -1, 2, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+2, -1, -1, -1, 1, -1, -1, 2, 2, -1, -1, -1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+2, -1, 1, -1, -1, -1, -1, -1, 2, -1, 1, -1, -1, -1, 1, 2, -1, -1, -1, 2, 1, -1, -1, -1, -1, -1, -1, -1, -1,
+2, -1, -1, 1, 1, -1, -1, 1, 1, -1, -1, -1, 1, -1, 2, -1, -1, -1, 2, 2, -1, -1, 2, -1, -1, -1, -1, -1, -1,
+-1, -1, -1, -1, 2, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1,
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 
 //во-первых, перечисляемый тип - совет Чернова, чтобы было понятно, что за константы используются в менюшке. 
 //я вот думаю, что-нибудь изменится, если мы их уберем?
@@ -281,108 +342,162 @@ int analysis_bin(unsigned char* tempkey, int sizetext)
 		switch (tmp)
 		{
 		case 'a':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigA_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigA_right);
+			//tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigA_left);
+			//tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigA_right);
+			tmp_count_bin += tableLeft['a'-'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['a'-'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
+
 			break;
 		case 'b':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigB_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigB_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigB_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigB_right);*/
+			tmp_count_bin += tableLeft['b'- 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['b' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'c':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigC_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigC_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigC_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigC_right);*/
+			tmp_count_bin += tableLeft['c' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['c' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'd':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigD_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigD_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigD_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigD_right);*/
+			tmp_count_bin += tableLeft['d' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['d' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'e':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigE_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigE_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigE_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigE_right);*/
+			tmp_count_bin += tableLeft['e' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['e' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'f':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigF_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigF_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigF_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigF_right);*/
+			tmp_count_bin += tableLeft['f' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['f' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'g':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigG_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigG_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigG_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigG_right);*/
+			tmp_count_bin += tableLeft['g' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['g' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'h':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigH_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigH_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigH_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigH_right);*/
+			tmp_count_bin += tableLeft['h' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['h' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'i':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigI_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigI_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigI_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigI_right);*/
+			tmp_count_bin += tableLeft['i' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['i' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'j':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigJ_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigJ_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigJ_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigJ_right);*/
+			tmp_count_bin += tableLeft['j' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['j' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'k':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigK_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigK_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigK_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigK_right);*/
+			tmp_count_bin += tableLeft['k' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['k' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'l':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigL_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigL_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigL_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigL_right);*/
+			tmp_count_bin += tableLeft['l' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['l' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'm':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigM_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigM_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigM_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigM_right);*/
+			tmp_count_bin += tableLeft['m'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['m'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'n':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigN_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigN_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigN_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigN_right);*/
+			tmp_count_bin += tableLeft['n' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['n' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'o':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigO_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigO_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigO_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigO_right);*/
+			tmp_count_bin += tableLeft['o' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['o' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'p':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigP_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigP_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigP_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigP_right);*/
+			tmp_count_bin += tableLeft['p' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['p' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'q':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigQ_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigQ_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigQ_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigQ_right);*/
+			tmp_count_bin += tableLeft['q' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['q' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'r':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigR_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigR_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigR_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigR_right);*/
+			tmp_count_bin += tableLeft['r' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['r' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 's':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigS_left);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigS_left);
 			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigS_right);
+			*/
+			tmp_count_bin += tableLeft['s' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['s' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 't':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigT_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigT_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigT_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigT_right);*/
+			tmp_count_bin += tableLeft['t' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['t' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'u':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigU_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigU_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigU_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigU_right);*/
+			tmp_count_bin += tableLeft['u' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['u' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'v':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigV_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigV_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigV_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigV_right);*/
+			tmp_count_bin += tableLeft['v' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['v' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'w':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigW_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigW_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigW_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigW_right);*/
+			tmp_count_bin += tableLeft['w' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['w' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'x':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigX_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigX_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigX_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigX_right);*/
+			tmp_count_bin += tableLeft['x' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['x' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'y':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigY_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigY_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigY_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigY_right);*/
+			tmp_count_bin += tableLeft['y' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['y' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		case 'z':
-			tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigZ_left);
-			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigZ_right);
+			/*tmp_count_bin += check(tolower(tmp_shifr_text[j - 1]), neigZ_left);
+			tmp_count_bin += check(tolower(tmp_shifr_text[j + 1]), neigZ_right);*/
+			tmp_count_bin += tableLeft['z' - 'a'][tolower(tmp_shifr_text[j - 1]) - 'a'];
+			tmp_count_bin += tableLeft['z' - 'a'][tolower(tmp_shifr_text[j + 1]) - 'a'];
 			break;
 		default:
 			break;
@@ -663,7 +778,7 @@ int main()
 	fseek(fin, 0, SEEK_END);
 	int size = ftell(fin);
 	fseek(fin, 0, SEEK_SET);
-
+	
 	//unsigned char* shifr_text = (unsigned char*)malloc(size * sizeof(unsigned char));
 
 	shifr_text = (unsigned char*)malloc(size * sizeof(unsigned char));
