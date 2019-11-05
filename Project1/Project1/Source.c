@@ -829,8 +829,8 @@ int main()
 	{
 		printf("%d, ", table2_right[0][kk]);
 	}
-	
-	int y;
+	*/
+	/*int y;
 	scanf("%d", &y);*/
 	//kSize = 10;
 	//analysis_bin("helloworld", size);
