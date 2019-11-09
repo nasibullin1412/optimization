@@ -199,7 +199,8 @@ float sum_matches(unsigned char split_str[], int size)
 	int i = 0, count_repit = 0;
 	float sum = 0.0;
 	//int sizeFor = size - 1;// вынос инварианта
-	for (i = 0; i < size-1; i++)
+	int sizeFor = size - 1;
+	for (i = 0; i < sizeFor; i++)
 	{
 		if (split_str[i] == split_str[i + 1])
 		{
@@ -207,7 +208,7 @@ float sum_matches(unsigned char split_str[], int size)
 		}
 		else
 		{
-			sum += count_repit * (count_repit - 1) / (float)(size * (size - 1));//вынос инваринта
+			sum += count_repit * (count_repit - 1) / (float)(size * sizeFor);//вынос инваринта
 			count_repit = 0;
 		}
 	}
@@ -265,7 +266,8 @@ int key_size(unsigned char shifr_text[], int size, float key_long[])
 {
 	int count_key = 0;
 	float sum_index = 0.0;
-	for (int i = 2; i < size / 2 + 1; i++)//size/2 + 1 заменить на переменную
+	int length = size / 2 + 1;
+	for (int i = 2; i < length; i++)//size/2 + 1 заменить на переменную
 	{
 		key_long[i] = (split_text(i, shifr_text, size));
 		sum_index += key_long[i];
@@ -273,7 +275,7 @@ int key_size(unsigned char shifr_text[], int size, float key_long[])
 	float max_delta = 0.0;
 	int kSize = 0;
 	float avverage = sum_index / (float)(size / 2 - 1);
-	for (int i = 2; i < size / 2 + 1; i++)// тоже самое
+	for (int i = 2; i < length; i++)// тоже самое
 	{
 		if ((key_long[i] - avverage) > max_delta)
 		{
@@ -619,8 +621,19 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 		if (read > (size - start))
 			read = (size - start);
 		//разверстка цикла?
-		for (unsigned int i = 0; i < read; i++)
+		int circleRead = read - read % 4;
+		int i = 0;
+		for (i = 0; i < circleRead; i += 4)
 		{
+			keystat[i][text[start + i]]++;
+			keystat[i + 1][text[start + i + 1]]++;
+			keystat[i + 2][text[start + i + 2]]++;
+			keystat[i + 3][text[start + i + 3]]++;
+			//printf("%d  %d\n", i+3, read);
+		}
+		for (i; i < read; i++)
+		{
+			//printf("%d  %d\n", i, read);
 			keystat[i][text[start + i]]++;
 		}
 		start += ksize;
@@ -636,13 +649,48 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 			unsigned int v = 0;
 			unsigned int max = 0;
 
-			for (int j = 0; j < 256; j++)//razveeeeeertka
+			for (int j = 0; j < 256; j++)//razveeeeeertka работает лучше без развёртки
 			{
 				if (keystat[i][j] > max)
 				{
 					max = keystat[i][j];
 					v = j;
 				}
+				/*if (keystat[i][j+1] > max)
+				{
+					max = keystat[i][j+1];
+					v = j+1;
+				}
+				if (keystat[i][j+2] > max)
+				{
+					max = keystat[i][j+2];
+					v = j+2;
+				}
+				if (keystat[i][j+3] > max)
+				{
+					max = keystat[i][j+3];
+					v = j+3;
+				}
+				if (keystat[i][j+4] > max)
+				{
+					max = keystat[i][j+4];
+					v = j+4;
+				}
+				if (keystat[i][j+5] > max)
+				{
+					max = keystat[i][j+5];
+					v = j+5;
+				}
+				if (keystat[i][j+6] > max)
+				{
+					max = keystat[i][j+6];
+					v = j+6;
+				}
+				if (keystat[i][j+7] > max)
+				{
+					max = keystat[i][j+7];
+					v = j+7;
+				}*/
 			}
 
 			key[i] = v;
@@ -839,6 +887,10 @@ int main()
 	if (keys_long[kSize] < 0.045)
 	{
 		maxKsize = 13;
+	}
+	else
+	{
+		maxKsize = kSize;
 	}
 
 	if (size > 300)
