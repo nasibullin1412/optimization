@@ -564,13 +564,13 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 		//разверстка цикла?
 		int cicrcleRead = read - read % 4;
 		unsigned int i = 0;
-		for (i = 0; i < cicrcleRead; i+=4)
+		for (i = 0; i < cicrcleRead; i+=4)//тут вроде как косяк какой то
 		{
 			keystat[i][text[start + i]]++;
-			keystat[i + 1][text[start + i+1]]++;
+			keystat[i + 1][text[start + i + 1]]++;
 			keystat[i + 2][text[start + i + 2]]++;
 			keystat[i + 3][text[start + i + 3]]++;
-			printf("%d  %d\n", i+3, read);
+			//printf("%d  %d\n", i+3, read);
 		}
 		for (i; i < read; i++)
 		{
