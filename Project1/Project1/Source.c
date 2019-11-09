@@ -562,7 +562,7 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 		if (read > (size - start))
 			read = (size - start);
 		//разверстка цикла?
-		int cicrcleRead = read / 4;
+		int cicrcleRead = read - read % 4;
 		unsigned int i = 0;
 		for (i = 0; i < cicrcleRead; i+=4)
 		{
@@ -572,7 +572,6 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 			keystat[i + 3][text[start + i + 3]];
 
 		}
-		i -= 4;
 		for (i; i < read; i++)
 		{
 			keystat[i][text[start + i]]++;
