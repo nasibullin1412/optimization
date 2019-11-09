@@ -835,7 +835,7 @@ int main()
 	//kSize = 10;
 	//analysis_bin("helloworld", size);
 
-	
+	//printf("%d", table2_left[0][' ']);
 	if (keys_long[kSize] < 0.045)
 	{
 		maxKsize = 13;
