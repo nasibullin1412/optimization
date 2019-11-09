@@ -649,14 +649,14 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 			unsigned int v = 0;
 			unsigned int max = 0;
 
-			for (int j = 0; j < 256; j++)//razveeeeeertka работает лучше без развёртки
+			for (int j = 0; j < 256; j+=8)//razveeeeeertka работает лучше без развёртки
 			{
 				if (keystat[i][j] > max)
 				{
 					max = keystat[i][j];
 					v = j;
 				}
-				/*if (keystat[i][j+1] > max)
+				if (keystat[i][j+1] > max)
 				{
 					max = keystat[i][j+1];
 					v = j+1;
@@ -690,7 +690,7 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 				{
 					max = keystat[i][j+7];
 					v = j+7;
-				}*/
+				}
 			}
 
 			key[i] = v;
