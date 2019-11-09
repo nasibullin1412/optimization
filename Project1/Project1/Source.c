@@ -118,7 +118,7 @@ void deletelem()
 		beg->next = cur->next;
 		free(cur);
 		cur = beg->next;
-		printf("edel\n\n\n");
+		//printf("edel\n\n\n");
 	}
 	cur = beg;
 	cur->next = NULL;
