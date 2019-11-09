@@ -568,12 +568,13 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 		{
 			keystat[i][text[start + i]]++;
 			keystat[i + 1][text[start + i+1]]++;
-			keystat[i + 2][text[start + i + 2]];
-			keystat[i + 3][text[start + i + 3]];
-
+			keystat[i + 2][text[start + i + 2]]++;
+			keystat[i + 3][text[start + i + 3]]++;
+			printf("%d  %d\n", i+3, read);
 		}
 		for (i; i < read; i++)
 		{
+			//printf("%d  %d\n", i, read);
 			keystat[i][text[start + i]]++;
 		}
 
