@@ -600,7 +600,7 @@ void BruteForce(unsigned char* key, unsigned char* hu, int size, int number, int
 		{
 			hu[number] = key[number] ^ frequency[i];
 
-			if (is_it_char(hu[number]))
+			if (table_is_it_char[hu[number]])
 			{
 				BruteForce(key, hu, size - 1, number + 1, sizetext);
 			}
