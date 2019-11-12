@@ -283,7 +283,7 @@ int key_size(unsigned char shifr_text[], int size, float key_long[])
 	}
 	return kSize;
 }
-
+//loh
 unsigned char frequency[] = " etaoinshrdlcumwfgypbvkxjqz";
 unsigned char alphabet[] = " etaoinshrdlcumwfgypbvkxjqzETAOINSHRDLCUMWFGYPBVKXJQZ1234567890!_¹;%:?*()-=+&^$#@";
 
