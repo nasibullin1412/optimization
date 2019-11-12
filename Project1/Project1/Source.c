@@ -342,6 +342,7 @@ int analysis_bin(unsigned char* tempkey, int sizetext)
 		
 		//блеярн бяецн ябхв.
 		if (tmp >= 'a' && tmp <= 'z')
+		//if (table_c[tmp])
 		{
 		tmp_count_bin += table2_left[tmp - 'a'][tolower(tmp_shifr_text[j - 1])];
 		tmp_count_bin += table2_right[tmp - 'a'][tolower(tmp_shifr_text[j + 1])];
