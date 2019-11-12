@@ -333,10 +333,26 @@ int analysis_bin(unsigned char* tempkey, int sizetext)
 {
 	//memset(tmp_shifr_text, 0, sizetext);
 	int needsize = need_size(100, sizetext), tmp_count_bin = 0;
-	for (int j = 0; j < needsize; j++)//развернуть
+	//int newNeedSize = needsize - needsize % 4;
+	int k = 0;
+	for (k; k < needsize; k++)//развернуть
 	{
-		tmp_shifr_text[j] = shifr_text[j] ^ tempkey[j % kSize];
+		tmp_shifr_text[k] = shifr_text[k] ^ tempkey[k % kSize];
+		/*tmp_shifr_text[k + 1] = shifr_text[k + 1] ^ tempkey[(k + 1) % kSize];
+		tmp_shifr_text[k + 2] = shifr_text[k + 2] ^ tempkey[(k + 2) % kSize];
+		tmp_shifr_text[k + 3] = shifr_text[k + 3] ^ tempkey[(k + 3) % kSize];*/
+		/*tmp_shifr_text[k + 4] = shifr_text[k + 4] ^ tempkey[(k + 4) % kSize];
+		tmp_shifr_text[k + 5] = shifr_text[k + 5] ^ tempkey[(k + 5) % kSize];
+		tmp_shifr_text[k + 6] = shifr_text[k + 6] ^ tempkey[(k + 6) % kSize];
+		tmp_shifr_text[k + 7] = shifr_text[k + 7] ^ tempkey[(k + 7) % kSize];
+		tmp_shifr_text[k + 8] = shifr_text[k + 8] ^ tempkey[(k + 8) % kSize];
+		tmp_shifr_text[k + 9] = shifr_text[k + 9] ^ tempkey[(k + 9) % kSize];*/
 	}
+	/*for ( k; k < needsize; k++)
+	{
+		tmp_shifr_text[k] = shifr_text[k] ^ tempkey[k % kSize];
+	}*/
+
 
 	for (int j = 1; j < needsize - 1; j++)//развернуть
 	{
@@ -623,7 +639,7 @@ void get_key(unsigned char* text, unsigned int size, unsigned char* key, unsigne
 		//разверстка цикла?
 		int circleRead = read - read % 4;
 		int i = 0;
-		for (i = 0; i < circleRead; i += 4)
+		for (i; i < circleRead; i += 4)
 		{
 			keystat[i][text[start + i]]++;
 			keystat[i + 1][text[start + i + 1]]++;
