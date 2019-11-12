@@ -911,8 +911,27 @@ int main()
 			if (maxKsize)
 			{
 				t = clock();
-				for (kSize = 2; kSize < maxKsize; kSize++)
+				count_for_Brut = 7;
+				get_key(shifr_text, size, key, 2);
+				get_key(shifr_text, size, key, 3);
+				get_key(shifr_text, size, key, 4);
+				get_key(shifr_text, size, key, 5);
+				get_key(shifr_text, size, key, 6);
+				get_key(shifr_text, size, key, 7);
+				get_key(shifr_text, size, key, 8);
+				get_key(shifr_text, size, key, 9);
+
+				count_for_Brut = 6;
+				get_key(shifr_text, size, key, 10);
+
+				count_for_Brut = 2;
+				get_key(shifr_text, size, key, 11);
+				get_key(shifr_text, size, key, 12);
+
+			
+				/*for (kSize = 2; kSize < maxKsize; kSize++)
 				{
+					printf("%d - ksize", kSize);
 					if (kSize < 10)
 						count_for_Brut = 7;
 					//êàê íàñ÷åò â else-if ñâÿçàòü?
@@ -924,12 +943,13 @@ int main()
 						{
 							if (kSize <= 12)
 								count_for_Brut = 2;
+							//ÌÎÃ ÁÛ ÁÛÒÜ ÍÅÄÎÑÒÈÆÈÌÛÉ ÊÎÄ, ÈÁÎ kSize = 13 ó íàñ íèêîãäà è íå ïîëó÷àåòñÿ. 
 							else
 								count_for_Brut = 1;
 						}
 					}
 					get_key(shifr_text, size, key, kSize);
-				}
+				}*/
 			}
 			else
 			{
