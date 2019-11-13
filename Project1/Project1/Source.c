@@ -292,21 +292,21 @@ unsigned char alphabet[] = " etaoinshrdlcumwfgypbvkxjqzETAOINSHRDLCUMWFGYPBVKXJQ
 //МАШИННО-НЕЗАВИС. Расставить иф по вероятности. 
 int is_it_char(char c)
 {
-	if ((c >= '0' && c <= '?') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= 32 && c <= 47))
+	//if ((c >= '0' && c <= '?') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= 32 && c <= 47))
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '?') || (c >= 32 && c <= 47))
 	{
 		return 1;
 	}
 	else return 0;
 }
 
-//АЛГОРИТМ. Можно организовать бинарный поиск вместо линейного, но там всего-навсего максимум 8 раз цикл идет, хз, улучшит ли это ситуацию. 
-//Хорошая идея так как это самая часто вызываемая функция в коде.
-//В идеале лучше сделать её в теле функции в которой мы её используем, но это уже вроде другая оптимизация
+//UNUSED NOW
+/* 
 int check(char c, const char* neig)
 {
 	if (c != ' ')
 	{
-		for (int i = 0; i < strlen(neig); i++)// dlina = strlen
+		for (int i = 0; i < strlen(neig); i++)
 		{
 			if (c == neig[i])
 			{
@@ -326,6 +326,7 @@ int check(char c, const char* neig)
 	}
 	else return 0;
 }
+*/
 
 //Алгоритм. или машин-нез? Если бы мы вместо case использовали if-elseif, а потом тип переделали на case.
 //Слишком палевно
@@ -595,7 +596,6 @@ void BruteForce(unsigned char* key, unsigned char* hu, int size, int number, int
 	}
 	else
 	{
-		//count_for_Brut
 		for (int i = 0; i < count_for_Brut; i++)
 		{
 			hu[number] = key[number] ^ frequency[i];
@@ -720,10 +720,6 @@ void print(unsigned char* key, int length)
 	int c = fgetc(fin);
 	while (c != EOF)
 	{
-		/*МАШ-ЗАВ. крч, надо каждый раз цифклически повторять элементы массива. их индексы от 0 до lengt - 1. типа 0 1 2 3 0 1 2 3 0 1 2 3
-		но тогда появится проверка if (индекс < lenght) и она будет на каждой итерации. хз, лучше ли это*/
-		/*Можно создать дохуя перечислимых типов для каждой длины ключа (благо у нас их может не больше 13 вроде). 
-		и вместо остатка переполнение использовать и кстати не ток в этом месте это можно сделать*/
 		c ^= key[i % length];
 		i++;
 		fputc(c, fout);
@@ -775,7 +771,6 @@ int correct(char *key, int sizeText)
 		printf("Символ не найден\n");
 		return 1;
 	}
-	//машинно-завис. есть ли способ найти остаток от деления проще? он там что-то затирал, но по-моему там был аж цикл.
 	int number = count % kSize;
 	char sim = key[number];
 	for (char i = 0; i < 127; i++)//mozno razvernyt
