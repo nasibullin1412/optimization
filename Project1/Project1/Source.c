@@ -339,7 +339,7 @@ int analysis_bin(unsigned char* tempkey, int sizetext)
 	for (k; k < needsize; k++)//развернуть
 	{
 		tmp_shifr_text[k] = shifr_text[k] ^ tempkey[k % kSize];
-		/*tmp_shifr_text[k + 1] = shifr_text[k + 1] ^ tempkey[(k + 1) % kSize];
+		/*tmp_shifr_text[k + 1] = shifr_text[k + 1] ^ tempkey[(k + 1) % kSize]
 		tmp_shifr_text[k + 2] = shifr_text[k + 2] ^ tempkey[(k + 2) % kSize];
 		tmp_shifr_text[k + 3] = shifr_text[k + 3] ^ tempkey[(k + 3) % kSize];*/
 		/*tmp_shifr_text[k + 4] = shifr_text[k + 4] ^ tempkey[(k + 4) % kSize];
